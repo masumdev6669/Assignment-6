@@ -1,42 +1,39 @@
 // src/components/ExerciseActions.tsx
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useApp } from "@/context/AppContext";
+import { showToast } from "./Toaster";
 
 export default function ExerciseActions({ exercise }: { exercise: any }) {
-  // Bring in the functions from our global context
   const { addToPlan, addToSaved, planItems, savedItems } = useApp();
 
-  // Local state to trigger a visual change on click
-  const [justAddedToPlan, setJustAddedToPlan] = useState(false);
-  const [justAddedToSaved, setJustAddedToSaved] = useState(false);
-
-  // Check if this exercise is already in the global list
-  const alreadyInPlan = planItems.some((i) => i.id === exercise.id);
-  const alreadyInSaved = savedItems.some((i) => i.id === exercise.id);
+  const isAlreadyInPlan = planItems.some((i) => i.id === exercise.id);
+  const isAlreadyInSaved = savedItems.some((i) => i.id === exercise.id);
 
   const handleAddToPlan = () => {
+    if (isAlreadyInPlan) {
+      showToast("Already added to today's plan", "warning");
+      return;
+    }
     addToPlan(exercise);
-    setJustAddedToPlan(true);
+    showToast("Added to today's plan");
   };
 
   const handleAddToSaved = () => {
+    if (isAlreadyInSaved) {
+      showToast("Already saved for later", "warning");
+      return;
+    }
     addToSaved(exercise);
-    setJustAddedToSaved(true);
+    showToast("Saved for later", "info");
   };
 
   return (
     <div className="flex flex-wrap gap-4 mt-2">
-      {/* ADD TO PLAN BUTTON */}
       <button
         onClick={handleAddToPlan}
-        disabled={justAddedToPlan || alreadyInPlan}
-        className={`font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2 ${
-          justAddedToPlan || alreadyInPlan
-            ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-            : "bg-[#ccff00] hover:bg-[#b3e600] text-black"
-        }`}
+        className="bg-[#ccff00] hover:bg-[#b3e600] text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
       >
         <svg
           className="w-5 h-5"
@@ -51,20 +48,12 @@ export default function ExerciseActions({ exercise }: { exercise: any }) {
             d="M12 4v16m8-8H4"
           ></path>
         </svg>
-        {justAddedToPlan || alreadyInPlan
-          ? "Added to Plan"
-          : "Add to today's plan"}
+        {isAlreadyInPlan ? "Added to today's plan" : "Add to today's plan"}
       </button>
 
-      {/* SAVE FOR LATER BUTTON */}
       <button
         onClick={handleAddToSaved}
-        disabled={justAddedToSaved || alreadyInSaved}
-        className={`font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2 border ${
-          justAddedToSaved || alreadyInSaved
-            ? "border-gray-800 text-gray-600 cursor-not-allowed"
-            : "bg-transparent border-gray-700 hover:border-gray-500 text-white"
-        }`}
+        className="bg-transparent border border-gray-700 hover:border-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
       >
         <svg
           className="w-5 h-5"
@@ -79,7 +68,7 @@ export default function ExerciseActions({ exercise }: { exercise: any }) {
             d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
           ></path>
         </svg>
-        {justAddedToSaved || alreadyInSaved ? "Saved" : "Save for later"}
+        {isAlreadyInSaved ? "Saved for later" : "Save for later"}
       </button>
     </div>
   );
