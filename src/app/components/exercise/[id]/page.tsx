@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import fitData from "../../../../../public/fitData.json";
+import ExerciseActions from "../../../components/ExerciseActions";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -114,7 +115,6 @@ export default async function ExerciseDetailPage({ params }: Props) {
             </div>
           </div>
 
-          {/* INSTRUCTIONS */}
           <div className="mb-8">
             <h2 className="text-lg font-bold uppercase tracking-wider mb-4">
               Instructions
@@ -130,41 +130,7 @@ export default async function ExerciseDetailPage({ params }: Props) {
             </ol>
           </div>
 
-          {/* ACTION BUTTONS */}
-          <div className="flex flex-wrap gap-4 mt-2">
-            <button className="bg-[#ccff00] hover:bg-[#b3e600] text-black font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 4v16m8-8H4"
-                ></path>
-              </svg>
-              Add to today's plan
-            </button>
-            <button className="bg-transparent border border-gray-700 hover:border-gray-500 hover:bg-gray-800 text-white font-bold py-3 px-6 rounded-lg transition-colors flex items-center gap-2">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                ></path>
-              </svg>
-              Save for later
-            </button>
-          </div>
+          <ExerciseActions exercise={exercise} />
         </div>
       </div>
     </main>

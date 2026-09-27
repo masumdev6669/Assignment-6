@@ -1,9 +1,13 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import logo from "@/assets/logo.png";
+import { useApp } from "@/context/AppContext";
 
 const Navbar = () => {
+  const { planItems, savedItems } = useApp();
+
   return (
     <div className="navbar bg-[#111111] border-b border-gray-800">
       <div className="navbar-start">
@@ -72,18 +76,18 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end mr-10 gap-4">
-        <div className="flex items-center gap-2">
+        <Link href="/plan" className="flex items-center gap-2 cursor-pointer">
           <span className="text-gray-400 text-sm font-medium">Plan</span>
           <div className="w-6 h-6 rounded-full bg-[#c2f800] text-black flex items-center justify-center text-xs font-bold">
-            0
+            {planItems.length}
           </div>
-        </div>
-        <div className="flex items-center gap-2">
+        </Link>
+        <Link href="/plan" className="flex items-center gap-2 cursor-pointer">
           <span className="text-gray-400 text-sm font-medium">Saved</span>
           <div className="w-6 h-6 rounded-full border border-gray-600 text-gray-400 flex items-center justify-center text-xs font-bold">
-            0
+            {savedItems.length}
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );
