@@ -1,3 +1,4 @@
+// src/app/page.tsx
 import React from "react";
 import Banner from "./components/shared/homepage/Banner";
 import Fit from "./components/shared/homepage/Fit";

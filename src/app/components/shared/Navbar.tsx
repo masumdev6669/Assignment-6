@@ -1,12 +1,19 @@
 "use client";
+
 import Image from "next/image";
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import logo from "@/assets/logo.png";
 import { useApp } from "@/context/AppContext";
 
 const Navbar = () => {
   const { planItems, savedItems } = useApp();
+  const pathname = usePathname();
+
+  // Check which page we're on
+  const isHomePage = pathname === "/";
+  const isPlanPage = pathname.startsWith("/plan");
 
   return (
     <div className="navbar bg-[#111111] border-b border-gray-800">
@@ -36,13 +43,18 @@ const Navbar = () => {
             <li>
               <Link
                 href="/"
-                className="text-[#c2f800] font-bold bg-[#1a1a1a] rounded-full"
+                className={`font-bold rounded-full ${isHomePage ? "text-[#c2f800] bg-[#1a1a1a]" : "text-gray-400"}`}
               >
                 Workouts
               </Link>
             </li>
             <li>
-              <Link href="/plan">My Plan</Link>
+              <Link
+                href="/plan"
+                className={`font-bold rounded-full ${isPlanPage ? "text-[#c2f800] bg-[#1a1a1a]" : "text-gray-400"}`}
+              >
+                My Plan
+              </Link>
             </li>
           </ul>
         </div>
@@ -59,7 +71,11 @@ const Navbar = () => {
           <li>
             <Link
               href="/"
-              className="text-[#c2f800] bg-[#1a1a1a] rounded-full font-bold px-6"
+              className={`font-bold px-6 rounded-full transition-colors ${
+                isHomePage
+                  ? "text-[#c2f800] bg-[#1a1a1a]"
+                  : "text-gray-400 hover:text-white"
+              }`}
             >
               Workouts
             </Link>
@@ -67,7 +83,11 @@ const Navbar = () => {
           <li>
             <Link
               href="/plan"
-              className="text-gray-400 hover:text-white font-medium px-4"
+              className={`font-bold px-6 rounded-full transition-colors ${
+                isPlanPage
+                  ? "text-[#c2f800] bg-[#1a1a1a]"
+                  : "text-gray-400 hover:text-white"
+              }`}
             >
               My Plan
             </Link>
