@@ -11,7 +11,6 @@ const Navbar = () => {
   const { planItems, savedItems } = useApp();
   const pathname = usePathname();
 
-  // Check which page we're on
   const isHomePage = pathname === "/";
   const isPlanPage = pathname.startsWith("/plan");
 

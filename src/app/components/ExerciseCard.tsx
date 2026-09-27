@@ -135,13 +135,11 @@ type ExerciseProps = {
 
 export default function ExerciseCard({ exercise }: ExerciseProps) {
   return (
-    // THE LINK TAG GOES HERE, WRAPPING THE WHOLE CARD
     <Link
       href={`../components/exercise/${exercise.id}`}
       className="block group"
     >
       <div className="bg-[#181818] rounded-2xl overflow-hidden border border-gray-800 flex flex-col hover:border-gray-600 transition-colors h-full">
-        {/* Image Section */}
         <div className="relative w-full h-52 bg-[#111] overflow-hidden">
           <Image
             src={exercise.image}
@@ -152,9 +150,7 @@ export default function ExerciseCard({ exercise }: ExerciseProps) {
           />
         </div>
 
-        {/* Content Section */}
         <div className="p-5 flex flex-col flex-grow">
-          {/* Muscle Group Tags */}
           <div className="flex gap-2 mb-3">
             {exercise.muscleGroups.map((group) => (
               <span
@@ -166,12 +162,10 @@ export default function ExerciseCard({ exercise }: ExerciseProps) {
             ))}
           </div>
 
-          {/* Title */}
           <h3 className="text-white text-lg font-bold uppercase leading-tight mb-4">
             {exercise.name}
           </h3>
 
-          {/* Stats Row */}
           <div className="flex items-center gap-4 text-gray-400 text-xs mt-auto pt-4 border-t border-gray-800 font-medium">
             <div className="flex items-center gap-1.5">
               ⏱ {exercise.duration} min

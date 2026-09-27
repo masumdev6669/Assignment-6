@@ -14,7 +14,6 @@ const Footer = () => {
           </span>
         </div>
 
-        {/* COPYRIGHT TEXT */}
         <div className="text-center md:text-right">
           <p className="font-light text-[13px] text-gray-400">
             © 2026 FitLog — Workout Library. Train hard, log honest.

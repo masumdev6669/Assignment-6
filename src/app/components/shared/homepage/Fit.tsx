@@ -13,11 +13,10 @@ export default function Fit() {
           The Library
         </h2>
         <p className="text-gray-400 text-sm mt-1">
-          Detailed exercises for every major muscle group.
+          Twelve lifts covering every major muscle group.
         </p>
       </div>
 
-      {/* Grid Layout - 1 col on mobile, 2 on tablet, 3 on desktop */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {exercises.map((exercise) => (
           <ExerciseCard key={exercise.id} exercise={exercise} />

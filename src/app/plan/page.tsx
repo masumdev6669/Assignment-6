@@ -1,20 +1,30 @@
 // src/app/plan/page.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useApp } from "@/context/AppContext";
-import { showToast } from "@/app/components/Toaster";
+import { showToast } from "../components/Toaster";
 
 export default function MyPlanPage() {
-  const { planItems, savedItems, removeFromPlan, removeFromSaved } = useApp();
+  const { planItems, savedItems, isLoaded, removeFromPlan, removeFromSaved } =
+    useApp();
   const [activeTab, setActiveTab] = useState<"today" | "saved">("today");
   const [sortBy, setSortBy] = useState<"duration" | "calories" | "rating">(
     "duration",
   );
-
   const [doneItems, setDoneItems] = useState<number[]>([]);
+
+  // NEW: Force the loading spinner to show for at least 500ms
+  const [showLoading, setShowLoading] = useState(true);
+
+  useEffect(() => {
+    if (isLoaded) {
+      const timer = setTimeout(() => setShowLoading(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoaded]);
 
   const totalExercises = planItems.length;
   const totalMinutes = planItems.reduce(
@@ -39,6 +49,7 @@ export default function MyPlanPage() {
     setDoneItems((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
     );
+    showToast("Workout marked as done");
   };
 
   const handleRemove = (id: number) => {
@@ -50,6 +61,18 @@ export default function MyPlanPage() {
       showToast("Removed from saved", "info");
     }
   };
+
+  // LOADING STATE
+  if (showLoading) {
+    return (
+      <main className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-gray-700 border-t-[#ccff00] rounded-full animate-spin"></div>
+          <p className="text-gray-400 text-sm font-medium">Loading workouts…</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white p-6 md:p-12">
